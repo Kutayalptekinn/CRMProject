@@ -1,0 +1,12 @@
+<div id="editor">
+	<p>Paste image from clipboard here:</p>
+</div>
+
+<script>
+	var editor = CKEDITOR.replace( 'editor' );
+	editor.on( 'loaded', function() {
+		if ( !CKEDITOR.plugins.clipboard.isCustomDataTypesSupported ) {
+			bender.ignore();
+		}
+	} );
+</script>

@@ -1,0 +1,26 @@
+﻿
+@using CRM.ViewModels.Admin
+@model WorkingRequestListViewModel
+
+
+
+@using (Html.BeginForm("DeleteAndAddNotDone", "WorkingRequest", new { Area = String.Empty }, FormMethod.Post, new { id = "NotDoneNoteForm", role = "form" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.NotDoneNote)
+        @Html.TextBoxFor(m => m.NotDoneNote, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NotDoneNote)
+    </div>
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="clearfix"></div>
+
+    <div class="form-group form-group-sm row">
+        <div class="col-xs-12">
+            <button type="submit" class="btn btn-primary pull-right margin-left10"><span class="fa fa-check"></span>&nbsp;&nbsp;Kaydet</button>
+            <button class="btn btn-danger pull-right" type="button" data-dismiss="modal"><span class="fa fa-times"></span>&nbsp;&nbsp;İptal</button>
+        </div>
+    </div>
+
+}
+

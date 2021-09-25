@@ -1,0 +1,81 @@
+﻿@model CRM.ViewModels.Admin.NotCompletedRequestListViewModel
+
+<tr id="@("notcompletedrequest_"+Model.Id)" class="master-row">
+    <td>
+
+
+
+
+
+        <h2 class="accordion-header" id="headingThree">
+            <button style="height:32px" class="glyphicon glyphicon-th-list btn btn-warning accordion-button " type="button" data-toggle="collapse" data-target="#collapse_@Model.Id" aria-expanded="false" aria-controls="collapse_@Model.Id">
+            </button>
+        </h2>
+
+
+
+
+
+    </td>
+    <td>@Model.Id</td>
+    <td>@Model.Request</td>
+    <td>@Model.Status</td>
+    <td>@Model.Priority</td>
+    <td>@Model.RequestorName</td>
+
+    <td>@Model.AssignTo</td>
+    <td>@Model.Deadline.GetValueOrDefault().ToString("dd-MM-yyyy")</td>
+    <td>@Model.NotDoneNote</td>
+
+    <td style="width:10px">
+
+        <a data-modal-form="true"
+           data-modal-size="modal-tt"
+           data-modal-delete="#notcompletedrequest_@Model.Id"
+           data-modal-highlight="#notcompletedrequest_@Model.Id"
+           data-modal-title="Delete Request"
+           data-hook-beforeunload="true"
+           class="btn btn-block btn-danger btn-sm"
+           href="@Url.Action("NotCompletedRequestDelete", "NotCompletedRequest", routeValues: new {Area = string.Empty,notcompletedRequestId=Model.Id})">
+            <i class="fa fa-remove fa-fw text-danger"></i>Sil
+        </a>
+
+
+    </td>
+
+
+</tr>
+
+
+
+<tr>
+    <td colspan="11">
+
+        <div id="collapse_@Model.Id" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="table">
+                    <table class="rwd-table">
+                        <thead class="text-center ">
+                            <tr>
+                                <th>Görev Adımları</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <tr>
+                                <td>
+                                    @foreach (var item in Model.Step)
+                                    {
+
+                                        <p>@item.StepDetail</p>
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </td>
+</tr>

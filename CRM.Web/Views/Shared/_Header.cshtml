@@ -1,0 +1,166 @@
+﻿
+   
+
+<header class="main-header">
+
+    <!-- Logo -->
+    <a href="index2.html" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><b>C</b>RM</span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>CRM</b></span>
+    </a>
+
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+                <!-- Messages: style can be found in dropdown.less-->
+
+                <!-- Tasks: style can be found in dropdown.less -->
+                <li class="dropdown tasks-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-flag-o"></i>
+                        <span class="label label-danger">9</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header" style="color: crimson">Your ongoing tasks by date</li>
+                        <li style="color:blueviolet">
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu" style="color:blueviolet">
+                                <li>
+                                    <!-- Task item -->
+                                    <a href="@Url.Action("Index","WorkingRequest",new { LastMonth=true})">
+                                        <h3 style="color:brown">
+                                            Aylık Görevler
+                                            <small class="pull-right">20%</small>
+                                        </h3>
+                                        <div class="progress xs">
+                                            <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
+                                                 aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <!-- end task item -->
+                                <li>
+                                    <!-- Task item -->
+                                    <a href="@Url.Action("Index","WorkingRequest",new { LastWeek=true})">
+                                        <h3 style="color: brown">
+                                            Haftalık Görevler
+                                            <small class="pull-right">40%</small>
+                                        </h3>
+                                        <div class="progress xs">
+                                            <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar"
+                                                 aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="sr-only">40% Complete</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <!-- Task item -->
+                                    <a href="@Url.Action("Index","WorkingRequest",new { LastDay=true})">
+                                        <h3 style="color: brown">
+                                            Günlük Görevler
+                                            <small class="pull-right">60%</small>
+                                        </h3>
+                                        <div class="progress xs">
+                                            <div class="progress-bar progress-bar-striped" style="width: 60%" role="progressbar"
+                                                 aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="sr-only">60% Complete</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <!-- Task item -->
+                                    <a href="@Url.Action("Index","WorkingRequest",new { Expired=true})">
+                                        <h3 style="color: brown">
+                                            Tarihi Geçmiş
+                                            <div class="pull-right fa fa-hourglass-3" style="color: black"></div>
+                                        </h3>
+                                        
+                                          
+                                       
+                                    </a>
+                                </li>
+                                <!-- end task item -->
+
+                            </ul>
+                        </li>
+                        <li class="footer">
+                            <a href="#">View all tasks</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- User Account: style can be found in dropdown.less -->
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">  
+                        <span class="hidden-xs">@CurrentUser.UserName</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- User image -->
+                        <li class="user-header">
+
+                            <p>
+                                @CurrentUser.UserName
+                            </p>
+                        </li>
+                        <!-- Menu Body -->
+
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="pull-right">
+                                <a href="/Login/LogOut" class="btn btn-default btn-flat">Sign out</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Control Sidebar Toggle Button -->
+            </ul>
+        </div>
+
+    </nav>
+</header>
+
+
+@*<script>
+    $(document).ready(function () {
+        $(".requests").on('click',
+            '.filterrequests',
+
+            function () {
+                $.ajax({
+                    url: '/WorkingRequest/FilterByMonth/',
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.success) {
+                            $.each(result.successMessages,
+                                function (i, item) {
+                                    toastr.success(item, 'Başarılı');
+                                });
+                            $.each(result.warningMessages,
+                                function (i, item) {
+                                    toastr.warning(item, 'Uyarı');
+                                });
+                        }
+                        if (!result.success) {
+                            $.each(result.errorMessages,
+                                function (i, item) {
+                                    toastr.error(item, 'Hata');
+                                });
+                        }
+                    }
+                });
+            });
+    });
+</script>*@
+

@@ -1,0 +1,141 @@
+﻿@model IPagedList<CRM.ViewModels.Admin.NewRequestListViewModel>
+@{var searchModel = (CRM.ViewModels.Admin.NewRequestSearchViewModel)ViewBag.SearchModel; }
+<section class="content">
+
+    <!-- /.box-header -->
+    <div class="box box-header">
+
+        <div class="box-header with-border">
+            <h3 class="box-title"></h3>
+
+            <div class="box-tools pull-right">
+
+
+            </div>
+
+            <a class="btn btn-bitbucket btn-sm"
+               data-modal-form="true"
+               data-modal-size="modal-xl"
+               data-modal-prepend="tbody#NewRequestList"
+               data-modal-title="Add New Request"
+               data-hook-beforeunload="true"
+               href="@Url.Action("NewRequestAdd", "NewRequest", routeValues: new {Area =string.Empty})">
+                <i class="fa fa-plus"></i>Add New Request
+            </a>
+
+            <a class="btn btn-bitbucket btn-sm"
+               data-modal-form="true"
+               data-modal-size="modal-lg"
+               data-modal-prepend="tbody#NewRequestList"
+               data-modal-title="Choose Task"
+               data-hook-beforeunload="true"
+               href="@Url.Action("ChooseTask", "NewRequest", routeValues: new {Area =string.Empty})">
+                <i class="fa fa"></i>Choose Task
+            </a>
+
+
+        </div>
+
+       
+
+      
+
+        <div class="table-responsive">
+            <table class="rwd-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Id</th>
+                        <th>Request</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>RequestorName</th>
+                        <th>AssignTo</th>
+                        <th>Deadline</th>
+                        <th style="width:50px"></th>
+                        <th style="width:50px"></th>
+                        <th style="width:50px"></th>
+                    </tr>
+                </thead>
+                @* ++ div a *@
+                <tbody id="NewRequestList">
+                    @Html.DisplayFor(m => m)
+                </tbody>
+            </table>
+
+
+
+            <div class="pull-left">
+
+                @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "newRequestListContainer" }).Options(o => o
+                                                                       .Action("NewRequestList")
+                                                                       .DisplayTemplate("BootstrapPagination")
+                                                                       .MaxNrOfPages(6)
+                                                                       .AlwaysAddFirstPageNumber()
+                                                                      .RouteValues(searchModel))
+            </div>
+            @if (Model.Any())
+            {
+    <div style="margin: 20px 0; float: left !important;">
+        @((Model.PageIndex * Model.PageSize) + 1)-@((Model.PageIndex * Model.PageSize) + Model.Count())/@Model.TotalItemCount
+    </div>}
+
+
+        </div>
+        <!-- /.table-responsive -->
+    </div>
+    <!-- /.box-body -->
+    <!-- /.box-footer -->
+</section>
+
+
+
+
+
+
+@*<script>
+        $(document).ready(function () {
+            $("#newRequestListContainer").on('click',
+                '.workstr',
+
+                function () {
+                    //var id = $(this).attr("data-id");
+                    //var closestTr = $(this).closest("#newrequest_");
+                    debugger;
+                    var confirmDelete = confirm('Ürünü silmek istediğinizden emin misiniz?');
+                    if (confirmDelete) {
+                        $.ajax({
+                            url: '/Product/ProductDelete/' + id,
+                            type: 'POST',
+                            success: function (result) {
+                                if (result.success) {
+                                    var $tr = closestTr;
+                                    $tr.nextUntil('.col').empty().remove();
+                                    $tr.animateDelete();
+                                    $.each(result.successMessages,
+                                        function (i, item) {
+                                            toastr.success(item, 'Başarılı');
+                                        });
+                                    $.each(result.warningMessages,
+                                        function (i, item) {
+                                            toastr.warning(item, 'Uyarı');
+                                        });
+                                }
+                                if (!result.success) {
+                                    $.each(result.errorMessages,
+                                        function (i, item) {
+                                            toastr.error(item, 'Hata');
+                                        });
+                                }
+                            }
+                        });
+                    }
+                });
+        });
+    </script>*@
+
+
+
+
+

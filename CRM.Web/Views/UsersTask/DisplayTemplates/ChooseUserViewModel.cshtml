@@ -1,0 +1,15 @@
+﻿@model CRM.ViewModels.Admin.ChooseUserViewModel
+
+<tr class="master-row">
+    <td>@Model.Id</td>
+    <td>@Model.Request</td>
+    <td>@Model.Status</td>
+    <td>@Model.Priority</td>
+    <td>@Model.RequestorName</td>
+    <td>@Model.AssignTo</td>
+    <td>@Model.Deadline.GetValueOrDefault().ToString("dd-MM-yyyy")</td>
+
+
+
+</tr>
+

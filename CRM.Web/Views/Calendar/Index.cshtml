@@ -1,0 +1,170 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Calendar
+        <small>Control panel</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Calendar</li>
+    </ol>
+</section>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="$('#myModal').modal('hide')">&times;</button>
+                <h4 class="modal-title"><span id="eventTitle"></span></h4>
+
+            </div>
+            <div class="modal-body">
+                @*<button id="btnDelete" class="btn btn-default btn-sm pull-right">
+                    <span class="glyphicon glyphicon-remove"></span> Remove
+                </button>
+                <button id="btnEdit" class="btn btn-default btn-sm pull-right" style="margin-right:5px;">
+                    <span class="glyphicon glyphicon-pencil"></span> Edit
+                </button>*@
+                <p id="pDetails"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#myModal').modal('hide')">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+
+        <!-- /.col -->
+        <div class="col-md-9">
+            <div class="box box-primary">
+                <div class="box-body no-padding">
+                    <!-- THE CALENDAR -->
+                    <div id="calendar"></div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /. box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+
+
+<script>
+    $(document).ready(function () {
+
+        var events = [];
+        var selectedEvent = null;
+        FetchEventAndRenderCalendar();
+        function FetchEventAndRenderCalendar() {
+            events = [];
+            $.ajax({
+                type: "GET",
+                url: "/Calendar/GetEvents",
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        console.log(data);
+                        events.push({
+                            eventID: v.Id,
+                            title: v.Request + '  '+ v.Worker,
+                            description: v.Status,
+                            description1: v.Worker,
+                            start: v.StartingDate,
+                            end: v.Deadline != null ? moment(v.Deadline) : null
+                            
+                        });
+                        
+                    })
+                    GenerateCalender(events);
+                },
+                error: function (error) {
+                    alert('failed');
+                }
+            })
+        }
+
+        function GenerateCalender(events) {
+
+            var date = new Date()
+            var d = date.getDate(),
+                m = date.getMonth(),
+                y = date.getFullYear()
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                buttonText: {
+                    today: 'today',
+                    month: 'month',
+                    week: 'week',
+                    day: 'day'
+                },
+                editable:true,
+                eventLimit: true,
+                eventColor: '#00c0ef',
+                events: events,
+                eventClick: function (calEvent, jsEvent, view) {
+                    selectedEvent = calEvent;
+                    $('#myModal #eventTitle').text(calEvent.title);
+                    var $description = $('<div/>');
+                    $description.append($('<p/>').html('<b>StartingDate:</b>' + calEvent.start.format("DD-MMM-YYYY HH:mm a")));
+                    if (calEvent.end != null) {
+                        $description.append($('<p/>').html('<b>Deadline:</b>' + calEvent.end.format("DD-MMM-YYYY HH:mm a")));
+                    }
+                    $description.append($('<p/>').html('<b>Status:</b>' + calEvent.description));
+                    $('#myModal #pDetails').empty().html($description);
+
+                    $description.append($('<p/>').html('<b>Worker:</b>' + calEvent.description1));
+                    debugger;
+                    $('#myModal #pDetails').empty().html($description);
+
+                    $('#myModal').modal("show");
+                },
+                selectable: true,
+                select: function (start,end) {
+                    selectedEvent = {
+                        eventID: 0,
+                        title: '',
+                        start: start,
+                        description: '',
+                        description1: '',
+                        end: end
+                    };
+                    openAddEditForm();
+                    $('#calendar').fullCalendar('unselect');
+                },
+                editable: true,
+                eventDrop: function (event) {
+                    var data = {
+                        Id: event.eventID,
+                        Request: event.title,
+                        Worker: event.description1,
+                        StartingDate: event.start.format('DD/MM/YYYY HH:mm A'),
+                        Deadline: event.end != null ? event.end.format('DD/MM/YYYY HH:mm A') : null,
+                        Status: event.description
+                    };
+                    SaveEvent(data);
+                }
+            });
+
+
+
+        }
+
+    });
+</script>
+
+

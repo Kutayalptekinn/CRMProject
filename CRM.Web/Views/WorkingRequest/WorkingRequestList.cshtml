@@ -1,0 +1,94 @@
+﻿@model IPagedList<CRM.ViewModels.Admin.WorkingRequestListViewModel>
+@{var searchModel = (CRM.ViewModels.Admin.WorkingRequestSearchViewModel)ViewBag.SearchModel; }
+
+<section class="content">
+     <div class="box box-header">
+        <div class="box-header with-border">
+            <h3 class="box-title"></h3>
+
+            <div class="box-tools pull-right">
+              
+            </div>
+        </div>
+
+        @*<a data-modal-view="true"
+           data-modal-size="modal-xl"
+           data-modal-title="Complete Detail"
+           class="btn btn-block btn-default "
+           href="@Url.Action("NotCompletedRequestList", "NotCompletedRequest", routeValues: new {Area = string.Empty})">
+            <i class=""></i>Tamamlanamayan İstekleri Gör
+        </a>
+
+
+        <a data-modal-view="true"
+           data-modal-size="modal-xl"
+           data-modal-title="Complete Detail"
+           class="btn btn-block btn-default "
+           href="@Url.Action("CompletedRequestList", "CompletedRequest", routeValues: new {Area = string.Empty})">
+            <i class=""></i>Tamamlanan İstekleri Gör
+        </a>*@
+
+
+        @*<a data-modal-view="true"
+           data-modal-size="modal-xl"
+           data-modal-title="Working Detail"
+           class="btn btn-block btn-default "
+           href="@Url.Action("WorkingRequestDetailList", "WorkingRequest", routeValues: new {Area = string.Empty})">
+            <i class=""></i>Çalışma Detayını Gör
+        </a>*@
+        <!-- /.box-header -->
+        <div class="box-body">
+
+
+
+            <div class="table-responsive">
+                <table class="rwd-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Id</th>
+                            <th>Request</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>RequestorName</th>
+                            <th>AssignTo</th>
+                            <th>Start/End</th>
+                            <th>Tamamlandı mı?</th>
+                            <th style="width:50px">Sil</th>
+                        </tr>
+                    </thead>
+                    <tbody id="WorkingRequestList">
+                        @Html.DisplayFor(m => m)
+                    </tbody>
+                </table>
+
+
+
+                <div class="pull-left">
+
+                    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "workingRequestListContainer" }).Options(o => o
+                                                                           .Action("WorkingRequestList")
+                                                                           .DisplayTemplate("BootstrapPagination")
+                                                                           .MaxNrOfPages(6)
+                                                                           .AlwaysAddFirstPageNumber()
+                                                                           .RouteValues(searchModel))
+                </div>
+                @if (Model.Any())
+                {
+            <div style="margin: 20px 0; float: left !important;">
+                @((Model.PageIndex * Model.PageSize) + 1)-@((Model.PageIndex * Model.PageSize) + Model.Count())/@Model.TotalItemCount
+            </div>}
+
+
+            </div>
+            <!-- /.table-responsive -->
+        </div>
+        <!-- /.box-body -->
+
+        <!-- /.box-footer -->
+    </div>
+
+
+
+</section>

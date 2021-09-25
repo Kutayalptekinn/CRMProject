@@ -1,0 +1,152 @@
+﻿
+@model CRM.ViewModels.Admin.WorkingRequestListViewModel
+
+<tr id="@("workingrequest_"+Model.Id)" class="master-row">
+
+   
+    <td>
+
+        <h2 class="accordion-header" id="headingThree">
+            <button style="height:32px" class="glyphicon glyphicon-th-list btn btn-warning accordion-button " type="button" data-toggle="collapse" data-target="#collapse_@Model.Id" aria-expanded="false" aria-controls="collapse_@Model.Id">
+            </button>
+        </h2>
+
+
+    </td>
+    <td>@Model.Id</td>
+    <td>@Model.Request</td>
+    <td>
+
+        <a data-modal-view="true"
+           data-modal-size="modal-xl"
+           data-modal-title="Açıklama"
+           class="btn btn-block "
+           href="@Url.Action("Description", "WorkingRequest", routeValues: new {Area = string.Empty,id=Model.Id})">
+            <i class=""></i>Açıklamayı Gör
+        </a>
+
+    </td>
+    <td>@Model.Status</td>
+    @*<td><div class="sparkbar" data-color="#00a65a" @Model.Priority></div> </td>*@
+    <td>@Model.Priority</td>
+    <td>@Model.RequestorName</td>
+
+    <td>@Model.AssignTo</td>
+    <td>@Model.StartingDate.GetValueOrDefault().ToString("dd-MM-yyyy")/@Model.Deadline.GetValueOrDefault().ToString("dd-MM-yyyy")</td>
+
+    <td style="width:10px">
+        @*<button type="button" data-id="@Model.Id" class="workdone btn btn-info">Tamamlandı</button>*@
+        <a data-modal-form="true"
+           data-modal-size="modal-tt"
+           data-modal-delete="#workingrequest_@Model.Id"
+           data-modal-highlight="#workingrequest_@Model.Id"
+           data-modal-title="Done Note"
+           data-hook-beforeunload="true"
+           class="btn btn-info btn-sm"
+           href="@Url.Action("DeleteAndAddDone", "WorkingRequest", routeValues: new {Area = string.Empty,id=Model.Id})">
+            <i class="fa fa-check-circle "></i>
+
+        </a>
+
+        <a data-modal-form="true"
+           data-modal-size="modal-tt"
+           data-modal-delete="#workingrequest_@Model.Id"
+           data-modal-highlight="#workingrequest_@Model.Id"
+           data-modal-title="Not Done Note"
+           data-hook-beforeunload="true"
+           class="btn btn-info btn-sm"
+           href="@Url.Action("DeleteAndAddNotDone", "WorkingRequest", routeValues: new {Area = string.Empty,id=Model.Id})">
+            <i class="fa fa-times"></i>
+
+        </a>
+    </td>
+
+
+
+    <td style="width:10px">
+
+        <a data-modal-form="true"
+           data-modal-size="modal-tt"
+           data-modal-delete="#workingrequest_@Model.Id"
+           data-modal-highlight="#workingrequest_@Model.Id"
+           data-modal-title="Delete Request"
+           data-hook-beforeunload="true"
+           class="btn btn-block btn-danger btn-sm"
+           href="@Url.Action("WorkingRequestDelete", "WorkingRequest", routeValues: new {Area = string.Empty,newRequestId=Model.Id})">
+            <i class="fa fa-remove fa-fw text-danger"></i>
+        </a>
+
+
+    </td>
+
+
+
+</tr>
+
+
+<tr>
+    <td colspan="11">
+
+        <div id="collapse_@Model.Id" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="table">
+                    <table class="rwd-table">
+                        <thead class="text-center ">
+                            <tr>
+                                <th>Görev Adımları</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <tr>
+                                <td>
+                                    @foreach (var item in Model.Step)
+                                    {
+
+                                    <div class="form-check che">
+                                        <label for="myCheck">@item.StepDetail:</label>
+
+                                        <input class="check" data-id="@item.Id" type="checkbox" checked="@item.Checkedd">
+
+                                    </div>
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </td>
+</tr>
+@*<td>
+    <div id="accordion_@Model.Id">
+        <div class="card">
+            <div class="card-header" id="headingOne_@Model.Id">
+                <h5 class="mb-0">
+                    <button class="btn btn-sm" data-toggle="collapse" data-target="#collapseOne_@Model.Id" aria-expanded="false" aria-controls="collapseOne_@Model.Id">
+                        Görev Detayı
+                    </button>
+                </h5>
+            </div>
+
+            <div id="collapseOne_@Model.Id" class="collapse" aria-labelledby="headingOne_@Model.Id" data-parent="#accordion_@Model.Id">
+                <div class="card-body">
+                    @foreach (var item in Model.Step)
+                    {
+
+                        <div class="form-check che">
+                            <label for="myCheck">@item.StepDetail:</label>
+
+                            <input class="check" data-id="@item.Id" type="checkbox" checked="@item.Checkedd">
+
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</td>*@

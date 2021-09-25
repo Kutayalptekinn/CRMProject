@@ -1,0 +1,19 @@
+﻿
+@model CRM.ViewModels.Admin.StepViewModel
+
+
+
+@using (Html.BeginCollectionItem("Step"))
+{
+    <div class="step-row">
+        <div class="form-group">
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.NewRequestsId)
+            @Html.LabelFor(m => m.StepDetail)
+            @Html.TextBoxFor(m => m.StepDetail, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.StepDetail)
+        </div>
+    <a class="adimsil btn btn-success" data-id="@Model.Id" onclick="$(this).closest('.step-row').remove()">Sil</a>
+    </div>
+
+}

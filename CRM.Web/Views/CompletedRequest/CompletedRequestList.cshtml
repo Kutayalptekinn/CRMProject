@@ -1,0 +1,53 @@
+﻿
+@model List<CRM.ViewModels.Admin.CompletedRequestListViewModel>
+
+<style>
+
+    .tableFixHead {
+        max-height: 250px;
+        overflow-y: scroll
+    }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background-color: #eee
+        }
+</style>
+
+
+<div class="box box-header">
+
+    <div class="box-header with-border">
+        <h3 class="box-title"></h3>
+
+        <div class="box-tools pull-right">
+
+
+        </div>
+        <div class="table-responsive">
+            <table class="rwd-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Id</th>
+                        <th>Request</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>RequestorName</th>
+                        <th>AssignTo</th>
+                        <th>Deadline</th>
+                        <th>DoneNote</th>
+                    </tr>
+                </thead>
+                <tbody id="CompletedRequestList">
+                    <tr>
+                        @Html.DisplayFor(m => m)
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    

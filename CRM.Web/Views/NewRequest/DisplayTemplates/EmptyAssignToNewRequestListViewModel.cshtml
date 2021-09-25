@@ -1,0 +1,73 @@
+﻿
+@model CRM.ViewModels.Admin.EmptyAssignToNewRequestListViewModel
+
+<tr id="@("emptynewrequest_"+Model.Id)" class="master-row">
+
+    <td>@Model.Id</td>
+    <td>@Model.Request</td>
+    <td>
+
+        <a data-modal-view="true"
+           data-modal-size="modal-xl"
+           data-modal-title="Açıklama"
+           class="btn btn-block "
+           href="@Url.Action("Description", "NewRequest", routeValues: new {Area = string.Empty,id=Model.Id})">
+            <i class=""></i>Açıklamayı Gör
+        </a>
+
+    </td>
+    <td>@Model.Priority</td>
+    <td>@Model.RequestorName</td>
+
+    <td>@Model.AssignTo</td>
+    <td>@Model.Deadline.GetValueOrDefault().ToString("dd-MM-yyyy")</td>
+    <td>
+
+        @Html.CheckBoxFor(m => m.Checked)
+
+    </td>
+    <td>
+        <div id="accordion">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-sm" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            Görev Detayı
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <h1>sda</h1>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </td>
+</tr>
+
+<tr>
+    
+</tr>
+
+
+
+@*<script>
+    $(document).ready(function () {
+        $(".che").on('click', '.check', function () {
+            var id = $(this).data("id");
+            debugger;
+            $.ajax({
+                url: '/NewRequest/check/' + id,
+                type: 'POST',
+                success: function (data) {
+
+                },
+                error: function () { toastr.error("hata") }
+            })
+
+        })
+    })
+</script>*@

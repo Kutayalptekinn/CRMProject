@@ -1,0 +1,166 @@
+﻿@model CRM.ViewModels.Admin.WorkingRequestSearchViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-solid">
+            <div class="box-header">
+                <i class="fa fa-book"></i>
+                <h3 class="box-title">Search</h3>
+            </div>
+            <div class="box-body">
+                @using (Html.BeginForm("WorkingRequestList", "WorkingRequest", new { Area = string.Empty }, FormMethod.Post, new { role = "form", id = "workingRequestSearchForm", data_ajax_form = "true", data_target_container = "#workingRequestListContainer" }))
+                {
+                    @Html.HiddenFor(a => a.LastMonth)
+                    @Html.HiddenFor(a => a.LastWeek)
+                    @Html.HiddenFor(a => a.LastDay)
+                    @Html.HiddenFor(a => a.Expired)
+                    <div class="row">
+                        <div class="form-group form-group-sm col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                            <label>Arama Kriteri</label>
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                        </div>
+
+                        <div class="form-group form-group-sm col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                            <span>@Html.Label("Tamamlanan ve Tamamlanmayan İstekler") </span>
+                            @Html.DropDownListFor(m => m.DoneAndNotDoneList, new List<SelectListItem> {
+                           new SelectListItem {Text = "Completed List" },
+                           new SelectListItem {Text = "Not Completed List"   },
+                        }
+                        , "Choose an option",
+                      new { @class = "form-control" })
+                        </div>
+
+                        <div class="form-group form-group-sm col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                            <span>@Html.Label("Sırala") </span>
+                            @Html.EnumDropDownListFor(m => m.SortList, "Seçiniz", new { @class = "form-control" })
+                        </div>
+
+                        <div class="clearfix"></div>
+
+
+                        <div class="form-group form-group-sm col-xs-12 col-md-4 col-md-4">
+                            <button type='submit' class="btn btn-default btn-block"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="workingRequestListContainer"></div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#workingRequestListContainer").on('click', '.check', function () {
+            var id = $(this).data("id");
+            debugger;
+            $.ajax({
+                url: '/WorkingRequest/check/' + id,
+                type: 'POST',
+                success: function (data) {
+
+                },
+                error: function () { alert('HATA'); }
+            })
+
+        })
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#workingRequestListContainer").on('click',
+            '.workdone',
+
+            function () {
+                var id = $(this).attr("data-id");
+                var closestTr = $(this).closest(".master-row");
+                $.ajax({
+                    url: '/WorkingRequest/DeleteAndAddDone/' + id,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.success) {
+                            var $tr = closestTr;
+                            $tr.nextUntil('.master-row').empty().remove();
+                            $tr.animateDelete();
+                            $.each(result.successMessages,
+                                function (i, item) {
+                                    toastr.success(item, 'Başarılı');
+                                });
+                            $.each(result.warningMessages,
+                                function (i, item) {
+                                    toastr.warning(item, 'Uyarı');
+                                });
+                        }
+                        if (!result.success) {
+                            $.each(result.errorMessages,
+                                function (i, item) {
+                                    toastr.error(item, 'Hata');
+                                });
+                        }
+                    }
+                });
+            });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#workingRequestListContainer").on('click',
+            '.worknotdone',
+
+            function () {
+                var id = $(this).attr("data-id");
+                var closestTr = $(this).closest(".master-row");
+                $.ajax({
+                    url: '/WorkingRequest/DeleteAndAddNotDone/' + id,
+                    type: 'POST',
+                    success: function (result) {
+                        if (result.success) {
+                            var $tr = closestTr;
+                            $tr.nextUntil('.master-row').empty().remove();
+                            $tr.animateDelete();
+                            $.each(result.successMessages,
+                                function (i, item) {
+                                    toastr.success(item, 'Başarılı');
+                                });
+                            $.each(result.warningMessages,
+                                function (i, item) {
+                                    toastr.warning(item, 'Uyarı');
+                                });
+                        }
+                        if (!result.success) {
+                            $.each(result.errorMessages,
+                                function (i, item) {
+                                    toastr.error(item, 'Hata');
+                                });
+                        }
+                    }
+                });
+            });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#workingRequestListContainer").on('click', '.requests', function () {
+            $.ajax({
+                url: '/WorkingRequest/FilterByMonth/',
+                type: 'POST',
+                success: function (data) {
+
+                },
+                error: function () { alert('HATA'); }
+            })
+
+        })
+    })
+</script>

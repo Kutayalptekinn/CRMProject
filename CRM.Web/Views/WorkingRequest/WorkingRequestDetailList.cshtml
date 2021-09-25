@@ -1,0 +1,39 @@
+﻿
+@model List<CRM.ViewModels.Admin.WorkingRequestDetailListViewModel>
+
+<style>
+
+    .tableFixHead {
+        max-height: 250px;
+        overflow-y: scroll
+    }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background-color: #eee
+        }
+
+</style>
+
+<div class="tableFixHead">
+    <table class="table no-margin">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Request</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>RequestorName</th>
+                <th>AssignTo</th>
+                <th>Deadline</th>
+            </tr>
+        </thead>
+        <tbody id="WorkingRequestDetailList">
+            <tr>
+                @Html.DisplayFor(m => m)
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,165 @@
+﻿@model CRM.ViewModels.Admin.NewRequestListViewModel
+
+ 
+
+
+<tr id="@("newrequest_"+Model.Id)" class="master-row"  >
+    <td>
+
+
+
+
+
+        <h2 class="accordion-header" id="headingThree">
+            <button style="height:32px"  class="glyphicon glyphicon-th-list btn btn-warning accordion-button " type="button" data-toggle="collapse" data-target="#collapse_@Model.Id" aria-expanded="false" aria-controls="collapse_@Model.Id">
+            </button>
+        </h2>
+
+     
+
+
+
+    </td>
+    <td>@Model.Id</td>
+    <td>@Model.Request</td>
+    <td>
+
+        <a data-modal-view="true"
+           data-modal-size="modal-xl"
+           data-modal-title="Açıklama"
+           class="btn btn-block "
+           href="@Url.Action("Description", "NewRequest", routeValues: new {Area = string.Empty,id=Model.Id})">
+            <i class=""></i>Açıklamayı Gör
+        </a>
+
+    </td>
+    <td>@Model.Status</td>
+    @*<td><div class="sparkbar" data-color="#00a65a" @Model.Priority></div> </td>*@
+    <td>@Model.Priority</td>
+    <td>@Model.RequestorName</td>
+    <td>@Model.AssignTo</td>
+    <td>@Model.Deadline.GetValueOrDefault().ToString("dd-MM-yyyy")</td>
+
+
+    <td class="workst">
+
+        @*<button type="button" data-id="@Model.Id" class="workstr btn btn-info">Çalışmaya Başla</button>*@
+        <button type="button" style="height:30px" data-id="@Model.Id" class="workstr btn btn-info" aria-label="Left Align">
+            start <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+        </button>
+    </td>
+
+
+
+    <td style="width:50px">
+        <a data-modal-form="true"
+           data-modal-size="modal-xl"
+           data-modal-update="#newrequest_@Model.Id"
+           data-modal-highlight="#newrequest_@Model.Id"
+           data-modal-title="Edit Request"
+           data-hook-beforeunload="true"
+           class="btn btn-block btn-success btn-sm"
+           href="@Url.Action("NewRequestEdit", "NewRequest", routeValues: new {Area = string.Empty,newRequestId=Model.Id})">
+            <i class="fa fa-edit fa-fw text-success"></i>
+        </a>
+    </td>
+
+
+    <td style="width:10px">
+        <a data-modal-form="true"
+           data-modal-size="modal-tt"
+           data-modal-delete="#newrequest_@Model.Id"
+           data-modal-title="Delete Request"
+           data-hook-beforeunload="true"
+           class="btn btn-block btn-danger btn-sm"
+           href="@Url.Action("NewRequestDelete", "NewRequest", routeValues: new {Area = string.Empty,newRequestId=Model.Id})">
+            <i class="fa fa-remove fa-fw text-danger"></i>
+        </a>
+    </td>
+
+
+
+
+
+</tr>
+
+
+
+
+
+<tr>
+    <td colspan="11">
+
+        <div id="collapse_@Model.Id" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="table">
+                           <table class="rwd-table">
+                        <thead class="text-center ">
+                            <tr>
+                                <th>Görev Adımları</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <tr>
+                                <td>
+                                @foreach (var item in Model.Step)
+                                {
+
+                                    <p>@item.StepDetail</p>
+                                }
+                                    </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </td>
+    </tr>
+@* colspan= kaç tane td nin iüstünde olacağı *@
+
+
+
+
+
+@*<td style="width:50px">
+        <a
+    href="javascript:void(0);"
+        data-toggle="confirmation"
+        title="Emin Misiniz"
+        data-btn-ok-label="Evet"
+        data-btn-cancel-label="Hayır"
+        data-placement="top"
+        data-newRequest-id="@Model.Id"
+        data-on-confirm="deleteNewRequest"
+    data-id="Model.Id"
+           class="btn btn-block btn-danger btn-sm remove">
+            <i class="fa fa-trash fa-fw text-danger removes"></i> Sil
+        </a>
+
+    </td>*@
+
+
+@*<div id="accordion_@Model.Id">
+    <div class="card">
+        <div class="card-header" id="headingOne_@Model.Id">
+            <h5 class="mb-0">
+                <button style="width:10px" class="btn btn-success" data-toggle="collapse" data-target="#collapseOne_@Model.Id" aria-expanded="false" aria-controls="collapseOne_@Model.Id">
+                </button>
+            </h5>
+        </div>
+        <div id="collapseOne_@Model.Id" class="collapse" aria-labelledby="headingOne_@Model.Id" data-parent="#accordion_@Model.Id">
+            <div class="card-body">
+                @foreach (var item in Model.Step)
+                {
+
+                    <p>@item.StepDetail</p>
+                }
+            </div>
+        </div>
+
+    </div>
+
+</div>*@

@@ -1,0 +1,24 @@
+﻿@model List<CRM.ViewModels.Admin.ChooseUserViewModel>
+<div class="box box-header">
+
+    <div class="table-responsive">
+        <table class="rwd-table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Request</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>RequestorName</th>
+                    <th>AssignTo</th>
+                    <th>Deadline</th>
+
+
+                </tr>
+            </thead>
+            <tbody id="NewRequestList">
+                @Html.DisplayFor(m => m)
+            </tbody>
+        </table>
+    </div>
+</div>

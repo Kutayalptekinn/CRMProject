@@ -1,0 +1,44 @@
+﻿@model CRM.ViewModels.Admin.WorkingRequestDetailListViewModel
+
+<tr class="master-row">
+
+    <td>@Model.Id</td>
+    <td>@Model.Request</td>
+    <td>@Model.Status</td>
+    <td>@Model.Priority</td>
+    <td>@Model.RequestorName</td>
+
+    <td>@Model.AssignTo</td>
+    <td>@Model.Deadline.GetValueOrDefault().ToString("dd-MM-yyyy")</td>
+
+    @*<td>
+        <div id="accordion_@Model.Id">
+            <div class="card">
+                <div class="card-header" id="headingOne_@Model.Id">
+                    <h5 class="mb-0">
+                        <button class="btn btn-sm" data-toggle="collapse" data-target="#collapseOne_@Model.Id" aria-expanded="false" aria-controls="collapseOne_@Model.Id">
+                            Görev Detayı
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseOne_@Model.Id" class="collapse" aria-labelledby="headingOne_@Model.Id" data-parent="#accordion_@Model.Id">
+                    <div class="card-body">
+                        @foreach (var item in Model.Step)
+                        {
+
+                            <div class="form-check che">
+                                <label for="myCheck">@item.StepDetail:</label>
+
+                                <input class="check" data-id="@item.Id" type="checkbox" checked="@item.Checkedd">
+
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </td>*@
+</tr>

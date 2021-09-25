@@ -1,0 +1,33 @@
+﻿@model CRM.ViewModels.Admin.ChooseUserViewModel
+
+
+
+
+
+
+@using (Ajax.BeginForm("ChooseUser", "UsersTask", new { Area = String.Empty }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "OnSuccess", OnFailure = "OnFailure" }, new { id = "NewRequestAddForm", role = "form" }))
+{
+<table>
+    <tr>
+        <td>Görev Listesi:</td>
+    </tr>
+    <tr>
+        <td>
+            @Html.DropDownListFor(m => m.AssignTo, ViewBag.Users as SelectList, "Görevlerini görmek istediğiniz kullanıcıyı seçiniz", new { @class = "form-control" })
+
+        </td>
+        <td>
+            <input id="Submit" type="submit" value="Kullanıcının Görevlerini Listele" />
+        </td>
+    </tr>
+
+</table>
+}
+<div id="choose">
+   </div>
+<script>
+    function OnSuccess(data) {
+        $("#choose").html(data)
+    }
+    </script>
+

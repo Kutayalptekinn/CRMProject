@@ -1,0 +1,95 @@
+﻿@model CRM.ViewModels.Admin.NewRequestSearchViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-solid">
+            <div class="box-header">
+                <i class="fa fa-book"></i>
+                <h3 class="box-title">Search</h3>
+            </div>
+            <div class="box-body">
+                @using (Html.BeginForm("NewRequestList", "NewRequest", new { Area = string.Empty }, FormMethod.Post, new { role = "form", id = "newRequestSearchForm", data_ajax_form = "true", data_target_container = "#newRequestListContainer" }))
+                {
+                <div class="row">
+                    <div class="form-group form-group-sm col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                        <label>Arama Kriteri</label>
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                    </div>
+
+
+                    <div class="form-group form-group-sm col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                        <span>@Html.Label("Sırala") </span>
+                        @Html.EnumDropDownListFor(m => m.SortList, "Seçiniz", new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group form-group-sm col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                        <span>@Html.Label("Sırala") </span>
+                        @Html.EnumDropDownListFor(m => m.PriorityList, "Seçiniz", new { @class = "form-control" })
+                    </div>
+                    <div class="clearfix"></div>
+
+
+                    <div class="form-group form-group-sm col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                        <button type='submit' class="btn btn-default btn-block"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    @* icontainer targetcontainer dataajaxorm *@
+    <div id="newRequestListContainer"></div>
+</div>
+@*@{Html.RenderAction("NewRequestList", "NewRequest"); }*@
+
+
+
+
+@* this attr functiondaki i  listviewmodel
+    *@
+<script>
+        $(document).ready(function () {
+            $("#newRequestListContainer").on('click',
+                '.workstr',
+
+                function () {
+                    var id = $(this).attr("data-id");
+                    var closestTr = $(this).closest(".master-row");
+                        $.ajax({
+                            url: '/NewRequest/StartWorking/' + id,
+                            type: 'POST',
+                            success: function (result) {
+                                if (result.success) {
+                                    var $tr = closestTr;
+                                    $tr.nextUntil('.master-row').empty().remove();
+                                    $tr.animateDelete();
+                                    $.each(result.successMessages,
+                                        function (i, item) {
+                                            toastr.success(item, 'Başarılı');
+                                        });
+                                    $.each(result.warningMessages,
+                                        function (i, item) {
+                                            toastr.warning(item, 'Uyarı');
+                                        });
+                                }
+                                if (!result.success) {
+                                    $.each(result.errorMessages,
+                                        function (i, item) {
+                                            toastr.error(item, 'Hata');
+                                        });
+                                }
+                            }
+                        });              
+                });
+        });
+    </script>
+
+

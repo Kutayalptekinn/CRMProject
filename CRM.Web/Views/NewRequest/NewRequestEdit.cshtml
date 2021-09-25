@@ -1,0 +1,85 @@
+﻿
+@model CRM.ViewModels.Admin.NewRequestEditViewModel
+@using CRM.ViewModels.Admin
+
+@using (Html.BeginForm("NewRequestEdit", "NewRequest", new { Area = String.Empty }, FormMethod.Post, new { id = "NewRequestEditForm", role = "form" }))
+{
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Request)
+        @Html.TextBoxFor(m => m.Request, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Request)
+    </div>
+
+    <div id="adimdiv">
+        <button id="adimekle">Adım Ekle</button>
+        <div id="stepContainer">
+            @foreach (StepViewModel step in Model.Step)
+            {
+                Html.RenderPartial("EditStepPartial", step);
+
+            }
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.AssignTo)
+        @Html.DropDownListFor(m => m.AssignTo, ViewBag.Users as SelectList, "Select", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.AssignTo)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Priority)
+        @Html.DropDownListFor(m => m.Priority, new List<SelectListItem> {
+                       new SelectListItem {Text = "Low", Selected=true },
+                       new SelectListItem {Text = "Medium"   },
+                       new SelectListItem {Text = "High"  }
+                    }
+                    , "Choose an option",
+                  new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Priority)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Deadline)
+        @Html.TextBoxFor(m => m.Deadline, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+        @Html.ValidationMessageFor(m => m.Deadline)
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="form-group form-group-lg col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        @Html.Label("Görev Bilgisi")
+        <div class="input-group input-group-sm">
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", id = "editor1", rows = "5", data_make_cke = "true", contentEditable = "true", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(m => m.Description).ToString()) })
+        </div>
+    </div>
+    @Html.HiddenFor(x => x.Id)
+
+
+
+    <div class="form-group form-group-sm row">
+        <div class="col-xs-12">
+            <button type="submit" class="btn btn-primary pull-right margin-left10"><span class="fa fa-check"></span>&nbsp;&nbsp;Kaydet</button>
+            <button class="btn btn-danger pull-right" type="button" data-dismiss="modal"><span class="fa fa-times"></span>&nbsp;&nbsp;İptal</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
+}
+
+<script>
+    $(document).ready(function () {
+        $("#adimdiv").on('click', '#adimekle', function () {
+            $.ajax({
+                url: '/NewRequest/EditStep',
+                type: 'GET',
+                success: function (data) {
+                    $('#adimdiv').append(data)
+                }
+            })
+            return false;
+        })
+    })
+</script>
+

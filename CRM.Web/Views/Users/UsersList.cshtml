@@ -1,0 +1,49 @@
+﻿@model List<CRM.ViewModels.Admin.LoginViewModel>
+@{
+    Layout = null;
+}
+  <div class="box box-header">
+    <div class="box-header with-border">
+        <h3 class="box-title"></h3>
+
+        <div class="box-tools pull-right">
+
+
+        </div>
+
+        <p>
+            <a class="btn btn-bitbucket btn-sm"
+               data-modal-form="true"
+               data-modal-size="modal-lg"
+               data-modal-append="tbody#UsersList"
+               data-modal-title="Add New User"
+               data-hook-beforeunload="true"
+               href="@Url.Action("Create", "Users", routeValues: new {Area =string.Empty})">
+                <i class="fa fa-plus"></i>Add New User
+            </a>
+        </p>
+
+
+    </div>
+
+
+
+
+    <div class="table-responsive">
+        <table class="rwd-table">
+            <thead>
+                <tr>
+                    <th>
+                        USER NAME
+                    </th>
+
+                    <th>ROLES</th>
+                </tr>
+            </thead>
+            <tbody id="UsersList">
+                @Html.DisplayFor(m => m)
+            </tbody>
+        </table>
+    </div>
+
+      </div>

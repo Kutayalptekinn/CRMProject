@@ -1,0 +1,65 @@
+﻿@model CRM.ViewModels.Admin.LoginViewModel
+
+
+
+<tr id="@("user_"+Model.Id)">
+    <td>
+        @Html.DisplayFor(modelItem => Model.UserName)
+    </td>
+
+
+    <td>
+        @foreach (var item1 in Model.Roles)
+        {
+            <a>-</a>
+            @Html.DisplayFor(modelItem => item1.RoleName)
+
+        }
+        <a>-</a>
+
+    </td>
+    <td style="width:50px">
+        <a data-modal-form="true"
+           data-modal-size="modal-md"
+           data-modal-update="#user_@Model.Id"
+           data-modal-highlight="#user_@Model.Id"
+           data-modal-title="Edit User"
+           data-hook-beforeunload="true"
+           class="btn btn-block btn-success btn-sm"
+           href="@Url.Action("UserEdit", "Users", routeValues: new {Area = string.Empty,userId=Model.Id})">
+            <i class="fa fa-edit fa-fw text-success"></i>
+        </a>
+    </td>
+    <td style="width:50px">
+        <a data-modal-form="true"
+           data-modal-size="modal-md"
+           data-modal-update="#user_@Model.Id"
+           data-modal-highlight="#user_@Model.Id"
+           data-modal-title="Şifre Yenileme"
+           data-hook-beforeunload="true"
+           class="btn btn-block btn-dark btn-sm"
+           href="@Url.Action("PasswordEdit", "Users", routeValues: new {Area = string.Empty,userId=Model.Id})">
+            <i class="fa fa-key fa-fw text-white"></i>
+        </a>
+    </td>
+    <td style="width:10px">
+
+        <a data-modal-form="true"
+           data-modal-size="modal-tt"
+           data-modal-delete="#user_@Model.Id"
+           data-modal-highlight="#user_@Model.Id"
+           data-modal-title="Delete User"
+           data-hook-beforeunload="true"
+           class="btn btn-block btn-danger btn-sm"
+           href="@Url.Action("Delete", "Users", routeValues: new {Area = string.Empty,userId=Model.Id})">
+            <i class="fa fa-remove fa-fw text-danger"></i>
+        </a>
+
+
+    </td>
+
+    @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>*@
+</tr>
